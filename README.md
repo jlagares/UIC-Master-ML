@@ -9,7 +9,7 @@ Hands-on training material for data engineering and GenAI workflows on Databrick
 ## Prerequisites
 
 - Access to a Databricks workspace with Unity Catalog enabled
-- The `team_3d_dev.poc` catalog and schema created and accessible
+- The `samples.bakehouse` catalog and schema created and accessible
 - `DATABRICKS_TOKEN` environment variable set (only needed for `sample.py`)
 
 ---
@@ -50,7 +50,7 @@ An end-to-end data + AI pipeline demonstrating how to go from raw catalog data t
 ### Cell 1 — Configuration
 Sets the target catalog:
 ```python
-TARGET_CATALOG = "team_3d_dev.poc"
+TARGET_CATALOG = "samples.bakehouse"
 ```
 
 ### Cell 2 — Data join
@@ -59,7 +59,7 @@ Reads `samples.bakehouse.sales_franchises` and `samples.bakehouse.media_customer
 ### Cell 3 — Persist to Delta Lake
 Writes the joined DataFrame to a Delta table:
 ```
-team_3d_dev.poc.franchises_with_reviews
+samples.bakehouse.franchises_with_reviews
 ```
 Uses `.format("delta").mode("overwrite")`.
 
