@@ -19,6 +19,15 @@ Hands-on training material for data engineering and GenAI workflows on Databrick
 ```
 sample.py                         # Standalone Python script — calls Databricks LLM endpoint via REST API
 Dockerfile                        # dbt-databricks image (latest stable dbt + Databricks adapter)
+install.ps1                       # Installs dbt-databricks + Databricks CLI tooling on Windows
+run.ps1                           # Builds/runs the dbt-databricks Docker image (debug/run/test/docs)
+.env.example                      # Template for Databricks connection variables (PAT-based auth)
+.env                              # Your actual connection values — gitignored, never commit
+dbt/
+  dbt_project.yml                 # dbt project config
+  profiles.yml                    # Databricks connection profile (reads vars from .env)
+  models/example/
+    my_first_model.sql            # Minimal smoke-test model (`select 1 ...`)
 Instructions/
   Step By Step usage.ipynb        # Platform onboarding: Databricks UI, GitHub, Jobs, SQL, Genie
 Notebooks/

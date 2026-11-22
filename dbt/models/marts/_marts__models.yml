@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: fct_weather_sales_correlation
+    description: "Gold — franchise review volume joined to city weather, same month (grain: franchise_id, review_month)."
+    columns:
+      - name: franchise_id
+        data_tests:
+          - not_null
+
+  - name: fct_weather_sales_ai_summary
+    description: >
+      Gold — fct_weather_sales_correlation enriched with an ai_query()
+      generated one-sentence narrative per franchise/month (GenAI step).
+    columns:
+      - name: franchise_id
+        data_tests:
+          - not_null
+      - name: weather_sales_insight
+        data_tests:
+          - not_null

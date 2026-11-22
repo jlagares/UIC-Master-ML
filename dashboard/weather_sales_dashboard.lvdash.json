@@ -1,0 +1,201 @@
+{
+  "datasets": [
+    {
+      "name": "weather_sales_ai_summary",
+      "displayName": "weather_sales_ai_summary",
+      "query": "SELECT * FROM workspace.gold.fct_weather_sales_ai_summary"
+    }
+  ],
+  "pages": [
+    {
+      "name": "main_page",
+      "displayName": "Weather & Sales Insights",
+      "layout": [
+        {
+          "widget": {
+            "name": "widget_total_reviews",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "weather_sales_ai_summary",
+                  "fields": [
+                    { "name": "sum(review_count)", "expression": "SUM(`review_count`)" }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 2,
+              "widgetType": "counter",
+              "encodings": {
+                "value": { "fieldName": "sum(review_count)", "displayName": "Total Reviews" }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Total Customer Reviews",
+                "showDescription": false
+              }
+            }
+          },
+          "position": { "x": 0, "y": 0, "width": 2, "height": 4 }
+        },
+        {
+          "widget": {
+            "name": "widget_reviews_by_franchise",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "weather_sales_ai_summary",
+                  "fields": [
+                    { "name": "franchise_name", "expression": "`franchise_name`" },
+                    { "name": "sum(review_count)", "expression": "SUM(`review_count`)" },
+                    { "name": "avg(avg_temperature_f)", "expression": "AVG(`avg_temperature_f`)" }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "franchise_name",
+                  "scale": { "type": "categorical" },
+                  "displayName": "Franchise"
+                },
+                "y": {
+                  "fieldName": "sum(review_count)",
+                  "scale": { "type": "quantitative" },
+                  "axis": { "title": "Reviews" },
+                  "displayName": "Reviews"
+                },
+                "color": {
+                  "fieldName": "avg(avg_temperature_f)",
+                  "scale": { "type": "quantitative" },
+                  "displayName": "Avg Temp (F)"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Reviews by Franchise, Colored by Avg Temperature",
+                "showDescription": false
+              }
+            }
+          },
+          "position": { "x": 2, "y": 0, "width": 4, "height": 4 }
+        },
+        {
+          "widget": {
+            "name": "widget_weather_sales_table",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "weather_sales_ai_summary",
+                  "fields": [
+                    { "name": "franchise_name", "expression": "`franchise_name`" },
+                    { "name": "city_key", "expression": "`city_key`" },
+                    { "name": "review_month", "expression": "`review_month`" },
+                    { "name": "review_count", "expression": "`review_count`" },
+                    { "name": "avg_temperature_f", "expression": "`avg_temperature_f`" },
+                    { "name": "avg_humidity_pct", "expression": "`avg_humidity_pct`" },
+                    { "name": "weather_sales_insight", "expression": "`weather_sales_insight`" }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 1,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "franchise_name",
+                    "type": "string",
+                    "displayAs": "string",
+                    "visible": true,
+                    "order": 0,
+                    "title": "Franchise",
+                    "displayName": "franchise_name"
+                  },
+                  {
+                    "fieldName": "city_key",
+                    "type": "string",
+                    "displayAs": "string",
+                    "visible": true,
+                    "order": 1,
+                    "title": "City",
+                    "displayName": "city_key"
+                  },
+                  {
+                    "fieldName": "review_month",
+                    "type": "datetime",
+                    "displayAs": "datetime",
+                    "visible": true,
+                    "order": 2,
+                    "title": "Month",
+                    "displayName": "review_month"
+                  },
+                  {
+                    "fieldName": "review_count",
+                    "type": "integer",
+                    "displayAs": "number",
+                    "visible": true,
+                    "order": 3,
+                    "title": "Reviews",
+                    "displayName": "review_count"
+                  },
+                  {
+                    "fieldName": "avg_temperature_f",
+                    "type": "float",
+                    "displayAs": "number",
+                    "visible": true,
+                    "order": 4,
+                    "title": "Avg Temp (F)",
+                    "displayName": "avg_temperature_f"
+                  },
+                  {
+                    "fieldName": "avg_humidity_pct",
+                    "type": "float",
+                    "displayAs": "number",
+                    "visible": true,
+                    "order": 5,
+                    "title": "Avg Humidity %",
+                    "displayName": "avg_humidity_pct"
+                  },
+                  {
+                    "fieldName": "weather_sales_insight",
+                    "type": "string",
+                    "displayAs": "string",
+                    "visible": true,
+                    "order": 6,
+                    "title": "AI Insight",
+                    "displayName": "weather_sales_insight"
+                  }
+                ]
+              },
+              "invisibleColumns": [],
+              "allowHTMLByDefault": false,
+              "itemsPerPage": 25,
+              "paginationSize": "default",
+              "condensed": true,
+              "withRowNumber": true,
+              "frame": {
+                "showTitle": true,
+                "title": "Weather & Sales Correlation (Gold Layer)",
+                "showDescription": true,
+                "description": "One row per franchise/month: review volume alongside average weather metrics and the AI-generated insight (ai_query)."
+              }
+            }
+          },
+          "position": { "x": 0, "y": 4, "width": 6, "height": 8 }
+        }
+      ]
+    }
+  ]
+}

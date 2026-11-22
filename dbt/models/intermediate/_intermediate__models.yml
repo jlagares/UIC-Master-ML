@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: int_daily_weather_by_city
+    description: "Silver — monthly weather aggregate per city (grain: city_key, weather_month)."
+    columns:
+      - name: city_key
+        data_tests:
+          - not_null
+      - name: weather_month
+        data_tests:
+          - not_null
+
+  - name: int_franchise_review_summary
+    description: "Silver — monthly customer review rollup per franchise (grain: franchise_id, review_month)."
+    columns:
+      - name: franchise_id
+        data_tests:
+          - not_null
+      - name: review_count
+        data_tests:
+          - not_null

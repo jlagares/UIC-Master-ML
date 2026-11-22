@@ -1,12 +1,17 @@
 <#
 .SYNOPSIS
-    Builds (if needed) and runs the dbt-databricks Docker image against the
-    scaffolded dbt project in this repo.
+    Basic dbt + Databricks connectivity demo. Builds (if needed) and runs the
+    dbt-databricks Docker image against the scaffolded dbt project in this
+    repo — use this to prove the connection works (dbt debug) and to run
+    ad-hoc dbt commands.
 
 .DESCRIPTION
     Reads connection settings (host, http_path, catalog, schema, token) from
     .env and passes them into the container, mounting ./dbt as the dbt
     project/profiles directory.
+
+    For the full bronze/silver/gold end-to-end scenario (weather + sales +
+    GenAI), use .\runFull.ps1 instead.
 
 .PARAMETER Command
     The dbt subcommand(s) to run inside the container, e.g. "debug", "run",
@@ -14,10 +19,10 @@
     dbt docs workspace (lineage graph / project docs) at http://localhost:8080.
 
 .EXAMPLE
-    .\run.ps1
-    .\run.ps1 run
-    .\run.ps1 run --select my_first_model
-    .\run.ps1 docs
+    .\runBasic.ps1
+    .\runBasic.ps1 run
+    .\runBasic.ps1 run --select my_first_model
+    .\runBasic.ps1 docs
 #>
 
 [CmdletBinding()]

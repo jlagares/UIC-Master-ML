@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: stg_accuweather__forecast_daily
+    description: Bronze — one row per city/day weather forecast.
+    columns:
+      - name: city_name
+        data_tests:
+          - not_null
+      - name: forecast_date
+        data_tests:
+          - not_null
+
+  - name: stg_bakehouse__sales_franchises
+    description: Bronze — one row per bakery franchise location.
+    columns:
+      - name: franchise_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: stg_bakehouse__media_customer_reviews
+    description: Bronze — one row per customer review, linked to a franchise.
+    columns:
+      - name: franchise_id
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_bakehouse__sales_franchises')
+              field: franchise_id

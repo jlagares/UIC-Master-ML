@@ -1,0 +1,26 @@
+version: 2
+
+sources:
+  - name: accuweather
+    database: samples
+    schema: accuweather
+    description: >
+      Pre-loaded Databricks sample data: historical and forecast weather
+      observations by city. Reused as-is — no ingestion pipeline required.
+    tables:
+      - name: forecast_daily_calendar_imperial
+        description: Daily weather forecast per city, imperial units (°F, mph, in).
+        loaded_at_field: date
+        freshness: null # static sample dataset — freshness checks not applicable
+
+  - name: bakehouse
+    database: samples
+    schema: bakehouse
+    description: >
+      Pre-loaded Databricks sample data: a fictitious bakery franchise chain
+      with sales, franchises, and customer reviews.
+    tables:
+      - name: sales_franchises
+        description: One row per bakery franchise location.
+      - name: media_customer_reviews
+        description: Free-text customer reviews linked to a franchise.
