@@ -18,6 +18,7 @@ Hands-on training material for data engineering and GenAI workflows on Databrick
 
 ```
 sample.py                         # Standalone Python script — calls Databricks LLM endpoint via REST API
+Dockerfile                        # dbt-databricks image (latest stable dbt + Databricks adapter)
 Instructions/
   Step By Step usage.ipynb        # Platform onboarding: Databricks UI, GitHub, Jobs, SQL, Genie
 Notebooks/
@@ -93,6 +94,46 @@ Standalone Python script showing how to call a Databricks model serving endpoint
 export DATABRICKS_TOKEN=<your-token>
 python sample.py
 ```
+
+---
+
+## Running dbt
+
+The `Dockerfile` builds an image with the latest stable `dbt-databricks` adapter (which pulls in the matching `dbt-core` dependency).
+
+### Build the image
+
+```bash
+docker build -t dbt-databricks .
+```
+
+### Check it works
+
+```bash
+docker run --rm dbt-databricks --version
+```
+
+### Minimal test project (`dbt/`)
+
+A scaffolded smoke-test project is included to verify your Databricks connection:
+
+```
+dbt/
+  dbt_project.yml
+  profiles.yml                  # OAuth-based, reads host/path/catalog/schema from env vars
+  models/example/my_first_model.sql   # `select 1 ...` — no source tables required
+```
+
+Fill in `.env` (copy from `.env.example`) with your `DATABRICKS_HOST` and `DATABRICKS_HTTP_PATH`, then run:
+
+```bash
+docker run --rm --env-file .env -v "${PWD}/dbt:/usr/app" dbt-databricks debug
+docker run --rm --env-file .env -v "${PWD}/dbt:/usr/app" dbt-databricks run
+```
+
+> **OAuth + Docker note:** `auth_type: oauth` opens a browser for interactive login. Since the container itself can't open your host browser, the first login is easier run **outside Docker** (`pip install dbt-databricks` locally, run `dbt debug`/`dbt run` from the `dbt/` folder) so the OAuth flow completes in your real browser. Once authenticated, cached credentials under your user profile can be mounted into the container for subsequent non-interactive runs.
+
+> On Windows PowerShell, `${PWD}` works as-is; in cmd.exe use `%cd%` instead.
 
 ---
 
