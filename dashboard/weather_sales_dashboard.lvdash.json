@@ -29,7 +29,10 @@
                 "query": {
                   "datasetName": "weather_sales_ai_summary",
                   "fields": [
-                    { "name": "sum(review_count)", "expression": "SUM(`review_count`)" }
+                    {
+                      "name": "sum(review_count)",
+                      "expression": "SUM(`review_count`)"
+                    }
                   ],
                   "disaggregated": false
                 }
@@ -39,7 +42,10 @@
               "version": 2,
               "widgetType": "counter",
               "encodings": {
-                "value": { "fieldName": "sum(review_count)", "displayName": "Total Reviews" }
+                "value": {
+                  "fieldName": "sum(review_count)",
+                  "displayName": "Total Reviews"
+                }
               },
               "frame": {
                 "showTitle": true,
@@ -48,7 +54,12 @@
               }
             }
           },
-          "position": { "x": 0, "y": 0, "width": 2, "height": 4 }
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 2,
+            "height": 4
+          }
         },
         {
           "widget": {
@@ -59,9 +70,18 @@
                 "query": {
                   "datasetName": "weather_sales_ai_summary",
                   "fields": [
-                    { "name": "franchise_name", "expression": "`franchise_name`" },
-                    { "name": "sum(review_count)", "expression": "SUM(`review_count`)" },
-                    { "name": "avg(avg_temperature_f)", "expression": "AVG(`avg_temperature_f`)" }
+                    {
+                      "name": "franchise_name",
+                      "expression": "`franchise_name`"
+                    },
+                    {
+                      "name": "sum(review_count)",
+                      "expression": "SUM(`review_count`)"
+                    },
+                    {
+                      "name": "avg(avg_temperature_f)",
+                      "expression": "AVG(`avg_temperature_f`)"
+                    }
                   ],
                   "disaggregated": false
                 }
@@ -73,18 +93,26 @@
               "encodings": {
                 "x": {
                   "fieldName": "franchise_name",
-                  "scale": { "type": "categorical" },
+                  "scale": {
+                    "type": "categorical"
+                  },
                   "displayName": "Franchise"
                 },
                 "y": {
                   "fieldName": "sum(review_count)",
-                  "scale": { "type": "quantitative" },
-                  "axis": { "title": "Reviews" },
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "axis": {
+                    "title": "Reviews"
+                  },
                   "displayName": "Reviews"
                 },
                 "color": {
                   "fieldName": "avg(avg_temperature_f)",
-                  "scale": { "type": "quantitative" },
+                  "scale": {
+                    "type": "quantitative"
+                  },
                   "displayName": "Avg Temp (F)"
                 }
               },
@@ -95,7 +123,12 @@
               }
             }
           },
-          "position": { "x": 2, "y": 0, "width": 4, "height": 4 }
+          "position": {
+            "x": 2,
+            "y": 0,
+            "width": 4,
+            "height": 4
+          }
         },
         {
           "widget": {
@@ -106,13 +139,34 @@
                 "query": {
                   "datasetName": "weather_sales_ai_summary",
                   "fields": [
-                    { "name": "franchise_name", "expression": "`franchise_name`" },
-                    { "name": "city_key", "expression": "`city_key`" },
-                    { "name": "review_month", "expression": "`review_month`" },
-                    { "name": "review_count", "expression": "`review_count`" },
-                    { "name": "avg_temperature_f", "expression": "`avg_temperature_f`" },
-                    { "name": "avg_humidity_pct", "expression": "`avg_humidity_pct`" },
-                    { "name": "weather_sales_insight", "expression": "`weather_sales_insight`" }
+                    {
+                      "name": "franchise_name",
+                      "expression": "`franchise_name`"
+                    },
+                    {
+                      "name": "city_key",
+                      "expression": "`city_key`"
+                    },
+                    {
+                      "name": "review_month",
+                      "expression": "`review_month`"
+                    },
+                    {
+                      "name": "review_count",
+                      "expression": "`review_count`"
+                    },
+                    {
+                      "name": "avg_temperature_f",
+                      "expression": "`avg_temperature_f`"
+                    },
+                    {
+                      "name": "avg_humidity_pct",
+                      "expression": "`avg_humidity_pct`"
+                    },
+                    {
+                      "name": "weather_sales_insight",
+                      "expression": "`weather_sales_insight`"
+                    }
                   ],
                   "disaggregated": true
                 }
@@ -125,7 +179,10 @@
                 "columns": [
                   {
                     "fieldName": "franchise_name",
-                    "booleanValues": ["false", "true"],
+                    "booleanValues": [
+                      "false",
+                      "true"
+                    ],
                     "imageUrlTemplate": "{{ @ }}",
                     "imageTitleTemplate": "{{ @ }}",
                     "imageWidth": "",
@@ -149,7 +206,10 @@
                   },
                   {
                     "fieldName": "city_key",
-                    "booleanValues": ["false", "true"],
+                    "booleanValues": [
+                      "false",
+                      "true"
+                    ],
                     "imageUrlTemplate": "{{ @ }}",
                     "imageTitleTemplate": "{{ @ }}",
                     "imageWidth": "",
@@ -174,7 +234,10 @@
                   {
                     "fieldName": "review_month",
                     "dateTimeFormat": "YYYY-MM-DD",
-                    "booleanValues": ["false", "true"],
+                    "booleanValues": [
+                      "false",
+                      "true"
+                    ],
                     "imageUrlTemplate": "{{ @ }}",
                     "imageTitleTemplate": "{{ @ }}",
                     "imageWidth": "",
@@ -199,7 +262,10 @@
                   {
                     "fieldName": "review_count",
                     "numberFormat": "0",
-                    "booleanValues": ["false", "true"],
+                    "booleanValues": [
+                      "false",
+                      "true"
+                    ],
                     "imageUrlTemplate": "{{ @ }}",
                     "imageTitleTemplate": "{{ @ }}",
                     "imageWidth": "",
@@ -224,7 +290,10 @@
                   {
                     "fieldName": "avg_temperature_f",
                     "numberFormat": "0.0",
-                    "booleanValues": ["false", "true"],
+                    "booleanValues": [
+                      "false",
+                      "true"
+                    ],
                     "imageUrlTemplate": "{{ @ }}",
                     "imageTitleTemplate": "{{ @ }}",
                     "imageWidth": "",
@@ -249,7 +318,10 @@
                   {
                     "fieldName": "avg_humidity_pct",
                     "numberFormat": "0.0",
-                    "booleanValues": ["false", "true"],
+                    "booleanValues": [
+                      "false",
+                      "true"
+                    ],
                     "imageUrlTemplate": "{{ @ }}",
                     "imageTitleTemplate": "{{ @ }}",
                     "imageWidth": "",
@@ -273,7 +345,10 @@
                   },
                   {
                     "fieldName": "weather_sales_insight",
-                    "booleanValues": ["false", "true"],
+                    "booleanValues": [
+                      "false",
+                      "true"
+                    ],
                     "imageUrlTemplate": "{{ @ }}",
                     "imageTitleTemplate": "{{ @ }}",
                     "imageWidth": "",
@@ -311,7 +386,12 @@
               }
             }
           },
-          "position": { "x": 0, "y": 4, "width": 6, "height": 8 }
+          "position": {
+            "x": 0,
+            "y": 4,
+            "width": 6,
+            "height": 8
+          }
         },
         {
           "widget": {
@@ -322,8 +402,14 @@
                 "query": {
                   "datasetName": "weather_review_correlation_by_franchise",
                   "fields": [
-                    { "name": "franchise_name", "expression": "`franchise_name`" },
-                    { "name": "sentiment_temp_correlation", "expression": "`sentiment_temp_correlation`" }
+                    {
+                      "name": "franchise_name",
+                      "expression": "`franchise_name`"
+                    },
+                    {
+                      "name": "sentiment_temp_correlation",
+                      "expression": "`sentiment_temp_correlation`"
+                    }
                   ],
                   "disaggregated": true
                 }
@@ -335,13 +421,19 @@
               "encodings": {
                 "x": {
                   "fieldName": "franchise_name",
-                  "scale": { "type": "categorical" },
+                  "scale": {
+                    "type": "categorical"
+                  },
                   "displayName": "Franchise"
                 },
                 "y": {
                   "fieldName": "sentiment_temp_correlation",
-                  "scale": { "type": "quantitative" },
-                  "axis": { "title": "Correlation (-1 to 1)" },
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "axis": {
+                    "title": "Correlation (-1 to 1)"
+                  },
                   "displayName": "Sentiment vs. Temperature Correlation"
                 }
               },
@@ -353,7 +445,12 @@
               }
             }
           },
-          "position": { "x": 0, "y": 12, "width": 6, "height": 6 }
+          "position": {
+            "x": 0,
+            "y": 12,
+            "width": 6,
+            "height": 6
+          }
         },
         {
           "widget": {
@@ -364,12 +461,30 @@
                 "query": {
                   "datasetName": "weather_review_correlation_by_franchise",
                   "fields": [
-                    { "name": "franchise_name", "expression": "`franchise_name`" },
-                    { "name": "city_key", "expression": "`city_key`" },
-                    { "name": "matched_days", "expression": "`matched_days`" },
-                    { "name": "sentiment_temp_correlation", "expression": "`sentiment_temp_correlation`" },
-                    { "name": "sentiment_humidity_correlation", "expression": "`sentiment_humidity_correlation`" },
-                    { "name": "avg_sentiment_score", "expression": "`avg_sentiment_score`" }
+                    {
+                      "name": "franchise_name",
+                      "expression": "`franchise_name`"
+                    },
+                    {
+                      "name": "city_key",
+                      "expression": "`city_key`"
+                    },
+                    {
+                      "name": "matched_days",
+                      "expression": "`matched_days`"
+                    },
+                    {
+                      "name": "sentiment_temp_correlation",
+                      "expression": "`sentiment_temp_correlation`"
+                    },
+                    {
+                      "name": "sentiment_humidity_correlation",
+                      "expression": "`sentiment_humidity_correlation`"
+                    },
+                    {
+                      "name": "avg_sentiment_score",
+                      "expression": "`avg_sentiment_score`"
+                    }
                   ],
                   "disaggregated": true
                 }
@@ -382,7 +497,10 @@
                 "columns": [
                   {
                     "fieldName": "franchise_name",
-                    "booleanValues": ["false", "true"],
+                    "booleanValues": [
+                      "false",
+                      "true"
+                    ],
                     "imageUrlTemplate": "{{ @ }}",
                     "imageTitleTemplate": "{{ @ }}",
                     "imageWidth": "",
@@ -398,7 +516,6 @@
                     "title": "Franchise",
                     "allowSearch": false,
                     "alignContent": "center",
-                    "headerAlignment": "center",
                     "allowHTML": false,
                     "highlightLinks": false,
                     "useMonospaceFont": false,
@@ -407,7 +524,10 @@
                   },
                   {
                     "fieldName": "city_key",
-                    "booleanValues": ["false", "true"],
+                    "booleanValues": [
+                      "false",
+                      "true"
+                    ],
                     "imageUrlTemplate": "{{ @ }}",
                     "imageTitleTemplate": "{{ @ }}",
                     "imageWidth": "",
@@ -423,7 +543,6 @@
                     "title": "City",
                     "allowSearch": false,
                     "alignContent": "center",
-                    "headerAlignment": "center",
                     "allowHTML": false,
                     "highlightLinks": false,
                     "useMonospaceFont": false,
@@ -433,7 +552,10 @@
                   {
                     "fieldName": "matched_days",
                     "numberFormat": "0",
-                    "booleanValues": ["false", "true"],
+                    "booleanValues": [
+                      "false",
+                      "true"
+                    ],
                     "imageUrlTemplate": "{{ @ }}",
                     "imageTitleTemplate": "{{ @ }}",
                     "imageWidth": "",
@@ -449,7 +571,6 @@
                     "title": "Matched Days",
                     "allowSearch": false,
                     "alignContent": "center",
-                    "headerAlignment": "center",
                     "allowHTML": false,
                     "highlightLinks": false,
                     "useMonospaceFont": false,
@@ -459,7 +580,10 @@
                   {
                     "fieldName": "sentiment_temp_correlation",
                     "numberFormat": "0.000",
-                    "booleanValues": ["false", "true"],
+                    "booleanValues": [
+                      "false",
+                      "true"
+                    ],
                     "imageUrlTemplate": "{{ @ }}",
                     "imageTitleTemplate": "{{ @ }}",
                     "imageWidth": "",
@@ -472,24 +596,37 @@
                     "displayAs": "number",
                     "visible": true,
                     "order": 3,
-                    "title": "Sentiment \u2194 Temp Corr.",
+                    "title": "Sentiment ↔ Temp Corr.",
                     "allowSearch": false,
                     "alignContent": "center",
-                    "headerAlignment": "center",
                     "allowHTML": false,
                     "highlightLinks": false,
                     "useMonospaceFont": false,
                     "preserveWhitespace": false,
                     "cellFormat": {
-                      "default": { "foregroundColor": null },
+                      "default": {
+                        "foregroundColor": null
+                      },
                       "rules": [
                         {
-                          "if": { "column": "sentiment_temp_correlation", "fn": ">=", "literal": "0.5" },
-                          "value": { "foregroundColor": "#1E8E3E" }
+                          "if": {
+                            "column": "sentiment_temp_correlation",
+                            "fn": ">=",
+                            "literal": "0.5"
+                          },
+                          "value": {
+                            "foregroundColor": "#1E8E3E"
+                          }
                         },
                         {
-                          "if": { "column": "sentiment_temp_correlation", "fn": "<=", "literal": "-0.5" },
-                          "value": { "foregroundColor": "#1E8E3E" }
+                          "if": {
+                            "column": "sentiment_temp_correlation",
+                            "fn": "<=",
+                            "literal": "-0.5"
+                          },
+                          "value": {
+                            "foregroundColor": "#1E8E3E"
+                          }
                         }
                       ]
                     },
@@ -498,7 +635,10 @@
                   {
                     "fieldName": "sentiment_humidity_correlation",
                     "numberFormat": "0.000",
-                    "booleanValues": ["false", "true"],
+                    "booleanValues": [
+                      "false",
+                      "true"
+                    ],
                     "imageUrlTemplate": "{{ @ }}",
                     "imageTitleTemplate": "{{ @ }}",
                     "imageWidth": "",
@@ -511,24 +651,37 @@
                     "displayAs": "number",
                     "visible": true,
                     "order": 4,
-                    "title": "Sentiment \u2194 Humidity Corr.",
+                    "title": "Sentiment ↔ Humidity Corr.",
                     "allowSearch": false,
                     "alignContent": "center",
-                    "headerAlignment": "center",
                     "allowHTML": false,
                     "highlightLinks": false,
                     "useMonospaceFont": false,
                     "preserveWhitespace": false,
                     "cellFormat": {
-                      "default": { "foregroundColor": null },
+                      "default": {
+                        "foregroundColor": null
+                      },
                       "rules": [
                         {
-                          "if": { "column": "sentiment_humidity_correlation", "fn": ">=", "literal": "0.5" },
-                          "value": { "foregroundColor": "#1E8E3E" }
+                          "if": {
+                            "column": "sentiment_humidity_correlation",
+                            "fn": ">=",
+                            "literal": "0.5"
+                          },
+                          "value": {
+                            "foregroundColor": "#1E8E3E"
+                          }
                         },
                         {
-                          "if": { "column": "sentiment_humidity_correlation", "fn": "<=", "literal": "-0.5" },
-                          "value": { "foregroundColor": "#1E8E3E" }
+                          "if": {
+                            "column": "sentiment_humidity_correlation",
+                            "fn": "<=",
+                            "literal": "-0.5"
+                          },
+                          "value": {
+                            "foregroundColor": "#1E8E3E"
+                          }
                         }
                       ]
                     },
@@ -537,7 +690,10 @@
                   {
                     "fieldName": "avg_sentiment_score",
                     "numberFormat": "0.00",
-                    "booleanValues": ["false", "true"],
+                    "booleanValues": [
+                      "false",
+                      "true"
+                    ],
                     "imageUrlTemplate": "{{ @ }}",
                     "imageTitleTemplate": "{{ @ }}",
                     "imageWidth": "",
@@ -553,7 +709,6 @@
                     "title": "Avg Sentiment",
                     "allowSearch": false,
                     "alignContent": "center",
-                    "headerAlignment": "center",
                     "allowHTML": false,
                     "highlightLinks": false,
                     "useMonospaceFont": false,
@@ -570,15 +725,21 @@
               "withRowNumber": true,
               "frame": {
                 "showTitle": true,
-                "title": "Per-Franchise Weather \u2194 Sentiment Correlation Detail",
+                "title": "Per-Franchise Weather ↔ Sentiment Correlation Detail",
                 "showDescription": true,
                 "description": "matched_days = number of aligned franchise review days vs. city weather days (teaching proxy, not calendar-matched). Coefficients only shown for franchises with >= 3 matched days."
               }
             }
           },
-          "position": { "x": 0, "y": 18, "width": 6, "height": 8 }
+          "position": {
+            "x": 0,
+            "y": 18,
+            "width": 6,
+            "height": 8
+          }
         }
-      ]
+      ],
+      "pageType": "PAGE_TYPE_CANVAS"
     }
   ]
 }
