@@ -3,12 +3,16 @@
     {
       "name": "weather_sales_ai_summary",
       "displayName": "weather_sales_ai_summary",
-      "query": "SELECT * FROM workspace.gold.fct_weather_sales_ai_summary"
+      "queryLines": [
+        "SELECT * FROM workspace.gold.fct_weather_sales_ai_summary"
+      ]
     },
     {
       "name": "weather_review_correlation_by_franchise",
       "displayName": "weather_review_correlation_by_franchise",
-      "query": "SELECT * FROM workspace.gold.fct_weather_review_correlation_by_franchise"
+      "queryLines": [
+        "SELECT * FROM workspace.gold.fct_weather_review_correlation_by_franchise"
+      ]
     }
   ],
   "pages": [
