@@ -19,3 +19,15 @@ models:
       - name: weather_sales_insight
         data_tests:
           - not_null
+
+  - name: fct_weather_review_correlation_by_franchise
+    description: >
+      Gold — per-franchise Pearson correlation coefficients (CORR()) between
+      daily review sentiment/volume and daily weather, aligned by day_index
+      rather than calendar date (grain: franchise_id). Only franchises with
+      at least 3 matched days are included.
+    columns:
+      - name: franchise_id
+        data_tests:
+          - not_null
+          - unique

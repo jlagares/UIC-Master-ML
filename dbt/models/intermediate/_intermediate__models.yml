@@ -18,3 +18,29 @@ models:
       - name: review_count
         data_tests:
           - not_null
+
+  - name: int_daily_weather_by_city_day
+    description: "Silver — daily weather per city with a sequential day_index for timeline alignment (grain: city_key, forecast_date)."
+    columns:
+      - name: city_key
+        data_tests:
+          - not_null
+
+  - name: int_daily_review_counts
+    description: "Silver — daily review count + avg sentiment score per franchise with a sequential day_index for timeline alignment (grain: franchise_id, review_date)."
+    columns:
+      - name: franchise_id
+        data_tests:
+          - not_null
+
+  - name: int_review_sentiment_scores
+    description: >
+      Silver — per-review sentiment classification (ai_query) mapped to a
+      numeric score (-1 negative, 0 neutral, 1 positive).
+    columns:
+      - name: franchise_id
+        data_tests:
+          - not_null
+      - name: sentiment_score
+        data_tests:
+          - not_null

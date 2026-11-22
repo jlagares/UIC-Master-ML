@@ -4,6 +4,11 @@
       "name": "weather_sales_ai_summary",
       "displayName": "weather_sales_ai_summary",
       "query": "SELECT * FROM workspace.gold.fct_weather_sales_ai_summary"
+    },
+    {
+      "name": "weather_review_correlation_by_franchise",
+      "displayName": "weather_review_correlation_by_franchise",
+      "query": "SELECT * FROM workspace.gold.fct_weather_review_correlation_by_franchise"
     }
   ],
   "pages": [
@@ -303,6 +308,239 @@
             }
           },
           "position": { "x": 0, "y": 4, "width": 6, "height": 8 }
+        },
+        {
+          "widget": {
+            "name": "widget_sentiment_temp_correlation",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "weather_review_correlation_by_franchise",
+                  "fields": [
+                    { "name": "franchise_name", "expression": "`franchise_name`" },
+                    { "name": "sentiment_temp_correlation", "expression": "`sentiment_temp_correlation`" }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "franchise_name",
+                  "scale": { "type": "categorical" },
+                  "displayName": "Franchise"
+                },
+                "y": {
+                  "fieldName": "sentiment_temp_correlation",
+                  "scale": { "type": "quantitative" },
+                  "axis": { "title": "Correlation (-1 to 1)" },
+                  "displayName": "Sentiment vs. Temperature Correlation"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Does Weather Really Impact Reviews? (Per-Franchise Correlation)",
+                "showDescription": true,
+                "description": "Pearson correlation between each franchise's daily review sentiment (-1/0/+1, ai_query) and daily temperature, aligned by day index. Near +1 or -1 = strong relationship; near 0 = little/no relationship."
+              }
+            }
+          },
+          "position": { "x": 0, "y": 12, "width": 6, "height": 6 }
+        },
+        {
+          "widget": {
+            "name": "widget_correlation_detail_table",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "weather_review_correlation_by_franchise",
+                  "fields": [
+                    { "name": "franchise_name", "expression": "`franchise_name`" },
+                    { "name": "city_key", "expression": "`city_key`" },
+                    { "name": "matched_days", "expression": "`matched_days`" },
+                    { "name": "sentiment_temp_correlation", "expression": "`sentiment_temp_correlation`" },
+                    { "name": "sentiment_humidity_correlation", "expression": "`sentiment_humidity_correlation`" },
+                    { "name": "avg_sentiment_score", "expression": "`avg_sentiment_score`" }
+                  ],
+                  "disaggregated": true
+                }
+              }
+            ],
+            "spec": {
+              "version": 1,
+              "widgetType": "table",
+              "encodings": {
+                "columns": [
+                  {
+                    "fieldName": "franchise_name",
+                    "booleanValues": ["false", "true"],
+                    "imageUrlTemplate": "{{ @ }}",
+                    "imageTitleTemplate": "{{ @ }}",
+                    "imageWidth": "",
+                    "imageHeight": "",
+                    "linkUrlTemplate": "{{ @ }}",
+                    "linkTextTemplate": "{{ @ }}",
+                    "linkTitleTemplate": "{{ @ }}",
+                    "linkOpenInNewTab": true,
+                    "type": "string",
+                    "displayAs": "string",
+                    "visible": true,
+                    "order": 0,
+                    "title": "Franchise",
+                    "allowSearch": false,
+                    "alignContent": "left",
+                    "allowHTML": false,
+                    "highlightLinks": false,
+                    "useMonospaceFont": false,
+                    "preserveWhitespace": false,
+                    "displayName": "franchise_name"
+                  },
+                  {
+                    "fieldName": "city_key",
+                    "booleanValues": ["false", "true"],
+                    "imageUrlTemplate": "{{ @ }}",
+                    "imageTitleTemplate": "{{ @ }}",
+                    "imageWidth": "",
+                    "imageHeight": "",
+                    "linkUrlTemplate": "{{ @ }}",
+                    "linkTextTemplate": "{{ @ }}",
+                    "linkTitleTemplate": "{{ @ }}",
+                    "linkOpenInNewTab": true,
+                    "type": "string",
+                    "displayAs": "string",
+                    "visible": true,
+                    "order": 1,
+                    "title": "City",
+                    "allowSearch": false,
+                    "alignContent": "left",
+                    "allowHTML": false,
+                    "highlightLinks": false,
+                    "useMonospaceFont": false,
+                    "preserveWhitespace": false,
+                    "displayName": "city_key"
+                  },
+                  {
+                    "fieldName": "matched_days",
+                    "numberFormat": "0",
+                    "booleanValues": ["false", "true"],
+                    "imageUrlTemplate": "{{ @ }}",
+                    "imageTitleTemplate": "{{ @ }}",
+                    "imageWidth": "",
+                    "imageHeight": "",
+                    "linkUrlTemplate": "{{ @ }}",
+                    "linkTextTemplate": "{{ @ }}",
+                    "linkTitleTemplate": "{{ @ }}",
+                    "linkOpenInNewTab": true,
+                    "type": "integer",
+                    "displayAs": "number",
+                    "visible": true,
+                    "order": 2,
+                    "title": "Matched Days",
+                    "allowSearch": false,
+                    "alignContent": "right",
+                    "allowHTML": false,
+                    "highlightLinks": false,
+                    "useMonospaceFont": false,
+                    "preserveWhitespace": false,
+                    "displayName": "matched_days"
+                  },
+                  {
+                    "fieldName": "sentiment_temp_correlation",
+                    "numberFormat": "0.000",
+                    "booleanValues": ["false", "true"],
+                    "imageUrlTemplate": "{{ @ }}",
+                    "imageTitleTemplate": "{{ @ }}",
+                    "imageWidth": "",
+                    "imageHeight": "",
+                    "linkUrlTemplate": "{{ @ }}",
+                    "linkTextTemplate": "{{ @ }}",
+                    "linkTitleTemplate": "{{ @ }}",
+                    "linkOpenInNewTab": true,
+                    "type": "float",
+                    "displayAs": "number",
+                    "visible": true,
+                    "order": 3,
+                    "title": "Sentiment \u2194 Temp Corr.",
+                    "allowSearch": false,
+                    "alignContent": "right",
+                    "allowHTML": false,
+                    "highlightLinks": false,
+                    "useMonospaceFont": false,
+                    "preserveWhitespace": false,
+                    "displayName": "sentiment_temp_correlation"
+                  },
+                  {
+                    "fieldName": "sentiment_humidity_correlation",
+                    "numberFormat": "0.000",
+                    "booleanValues": ["false", "true"],
+                    "imageUrlTemplate": "{{ @ }}",
+                    "imageTitleTemplate": "{{ @ }}",
+                    "imageWidth": "",
+                    "imageHeight": "",
+                    "linkUrlTemplate": "{{ @ }}",
+                    "linkTextTemplate": "{{ @ }}",
+                    "linkTitleTemplate": "{{ @ }}",
+                    "linkOpenInNewTab": true,
+                    "type": "float",
+                    "displayAs": "number",
+                    "visible": true,
+                    "order": 4,
+                    "title": "Sentiment \u2194 Humidity Corr.",
+                    "allowSearch": false,
+                    "alignContent": "right",
+                    "allowHTML": false,
+                    "highlightLinks": false,
+                    "useMonospaceFont": false,
+                    "preserveWhitespace": false,
+                    "displayName": "sentiment_humidity_correlation"
+                  },
+                  {
+                    "fieldName": "avg_sentiment_score",
+                    "numberFormat": "0.00",
+                    "booleanValues": ["false", "true"],
+                    "imageUrlTemplate": "{{ @ }}",
+                    "imageTitleTemplate": "{{ @ }}",
+                    "imageWidth": "",
+                    "imageHeight": "",
+                    "linkUrlTemplate": "{{ @ }}",
+                    "linkTextTemplate": "{{ @ }}",
+                    "linkTitleTemplate": "{{ @ }}",
+                    "linkOpenInNewTab": true,
+                    "type": "float",
+                    "displayAs": "number",
+                    "visible": true,
+                    "order": 5,
+                    "title": "Avg Sentiment",
+                    "allowSearch": false,
+                    "alignContent": "right",
+                    "allowHTML": false,
+                    "highlightLinks": false,
+                    "useMonospaceFont": false,
+                    "preserveWhitespace": false,
+                    "displayName": "avg_sentiment_score"
+                  }
+                ]
+              },
+              "invisibleColumns": [],
+              "allowHTMLByDefault": false,
+              "itemsPerPage": 25,
+              "paginationSize": "default",
+              "condensed": true,
+              "withRowNumber": true,
+              "frame": {
+                "showTitle": true,
+                "title": "Per-Franchise Weather \u2194 Sentiment Correlation Detail",
+                "showDescription": true,
+                "description": "matched_days = number of aligned franchise review days vs. city weather days (teaching proxy, not calendar-matched). Coefficients only shown for franchises with >= 3 matched days."
+              }
+            }
+          },
+          "position": { "x": 0, "y": 18, "width": 6, "height": 8 }
         }
       ]
     }

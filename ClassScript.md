@@ -1,12 +1,5 @@
 # Dbt + Databricks End-to-End: Weather & Sales
 
-A guided, step-by-step script for running this class live (or self-paced). It
-implements the 6-step scenario mapped to the five pillars (Data Management,
-DataOps, Data Architecture, Software Engineering, Security) and the six
-values (Cost, Agility, Scalability, Simplicity, Reuse, Interoperability).
-
----
-
 ## The Business Problem
 
 **Question:** *Does the weather in a franchise's city help explain how many
@@ -124,8 +117,8 @@ any dbt subcommand against the scaffolded project in `dbt/`, using
 | Layer | Folder | Schema | Models |
 |---|---|---|---|
 | Bronze | `dbt/models/staging/` | `workspace.bronze` | `stg_accuweather__forecast_daily`, `stg_bakehouse__sales_franchises`, `stg_bakehouse__media_customer_reviews` |
-| Silver | `dbt/models/intermediate/` | `workspace.silver` | `int_daily_weather_by_city`, `int_franchise_review_summary` |
-| Gold | `dbt/models/marts/` | `workspace.gold` | `fct_weather_sales_correlation`, `fct_weather_sales_ai_summary` |
+| Silver | `dbt/models/intermediate/` | `workspace.silver` | `int_daily_weather_by_city`, `int_daily_weather_by_city_day`, `int_franchise_review_summary`, `int_review_sentiment_scores`, `int_daily_review_counts` |
+| Gold | `dbt/models/marts/` | `workspace.gold` | `fct_weather_sales_correlation`, `fct_weather_sales_ai_summary`, `fct_weather_review_correlation_by_franchise` |
 
 **Schema naming:** `dbt/macros/get_custom_schema.sql` overrides dbt's default
 `generate_schema_name` macro so each layer's `+schema` config (set in
@@ -178,9 +171,30 @@ is standard and extends cleanly to new sources.
   franchise/month's review volume + weather snapshot into a one-sentence,
   human-readable insight — the same `LOWER(ai_query(...))` pattern used in
   `Notebooks/From Table to GenAI.ipynb`.
-- This is the payoff moment for the class: raw sample data → governed,
+- `dbt/models/intermediate/int_review_sentiment_scores.sql` uses the same
+  `ai_query()` pattern to classify **each individual review's sentiment**
+  (positive/neutral/negative → +1/0/-1), which feeds the correlation metric
+  below. This is the payoff moment for the class: raw sample data → governed,
   tested bronze/silver/gold tables → an LLM-generated narrative, all driven
   by `dbt build`.
+
+### Bonus — "Does weather really impact reviews?" (per-franchise correlation)
+
+- `dbt/models/marts/fct_weather_review_correlation_by_franchise.sql`
+  computes a real **Pearson correlation coefficient (`CORR()`)** per
+  franchise, between its daily review sentiment and the city's daily
+  weather — directly answering "is this correlation statistically real, or
+  just a nice sentence?"
+- **Why sentiment, not review count:** franchises get ~1 review/day, so
+  review *volume* barely varies day to day — `CORR()` against volume is
+  almost always `NULL` (no variance to correlate). Review *sentiment* score
+  does vary, so it's the metric that can actually show a relationship.
+- **Why `day_index`, not calendar date:** per the data caveat above, review
+  dates and weather dates don't share a calendar window. We align each
+  franchise's Nth day of reviews with the Nth day of its city's weather data
+  (`day_index`) as a teaching proxy — label this clearly as directional, not
+  causal, since most franchises have well under 20 matched days
+  (`matched_days` column; franchises below 3 matched days are excluded).
 
 ---
 
@@ -199,6 +213,12 @@ The dashboard includes:
   temperature.
 - A **table**: the full gold row set — franchise, city, review count,
   weather metrics, and the `ai_query()`-generated insight.
+- A **bar chart**: per-franchise correlation between review sentiment and
+  temperature (`fct_weather_review_correlation_by_franchise`) — "does
+  weather really impact reviews?" with an actual coefficient, not just a
+  sentence.
+- A **detail table**: `matched_days`, sentiment↔temperature correlation,
+  sentiment↔humidity correlation, and average sentiment per franchise.
 
 If your catalog/schema differs from `workspace.gold`, edit the dataset
 query at the top of the `.lvdash.json` file (or in the dashboard UI after
@@ -216,3 +236,4 @@ import) to match your environment.
 | 4. Macros + docs | Software Engineering | Simplicity, Reuse |
 | 5. Scoped grants + token | Security | — |
 | 6. `ai_query()` insight + dashboard | (ties it all together) | Agility, Interoperability |
+| Bonus. Per-franchise sentiment↔weather `CORR()` | (validates the narrative) | Agility, Interoperability |
