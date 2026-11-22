@@ -17,6 +17,8 @@ The `dbt/` project and `dashboard/weather_sales_dashboard.lvdash.json` dashboard
 3. Using `ai_query()` to turn each franchise's weather + review numbers into a one-sentence, human-readable insight.
 4. Surfacing all of it in a dashboard anyone can open and query visually — without writing SQL — to answer questions like *"Which franchises get the most reviews?"*, *"Is there a pattern between temperature/humidity and review volume?"*, and *"What's driving customer sentiment this month?"*
 
+> **Data caveat — know this before you look at results:** `samples.bakehouse.media_customer_reviews` is fixed at **2024-05-20 to 2024-05-31**. `samples.accuweather` is a *rolling window relative to today* — historical data covers **2024-06-27 to 2024-07-12** and forecast data covers **2024-07-12 to 2024-07-26** (these dates shift as time passes). The two date ranges never overlap, so the pipeline correlates review volume with each city's **current weather snapshot** rather than the weather at the time of the review. This is a limitation of the sample datasets, not the pipeline logic — call it out when presenting results.
+
 See [`ClassScript.md`](./ClassScript.md) for the full step-by-step build and the pillars/values each step demonstrates.
 
 ---

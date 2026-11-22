@@ -1,4 +1,4 @@
-# Class Script — dbt + Databricks End-to-End: Weather & Sales
+# Dbt + Databricks End-to-End: Weather & Sales
 
 A guided, step-by-step script for running this class live (or self-paced). It
 implements the 6-step scenario mapped to the five pillars (Data Management,
@@ -33,6 +33,22 @@ all as a Databricks (Lakeview) dashboard anyone can open — answering
 questions like *"Which franchises get the most reviews?"*, *"Is there a
 pattern between temperature/humidity and review volume?"*, and *"What's
 driving customer sentiment this month?"* — with zero new data ingestion.
+
+**Data caveat — set expectations before showing results:**
+
+| Source | Date range | Notes |
+|---|---|---|
+| `samples.bakehouse.media_customer_reviews` | 2024-05-20 to 2024-05-31 | Fixed sample dataset |
+| `samples.accuweather.historical_daily_calendar_imperial` | 2024-06-27 to 2024-07-12 | Rolling window, ~2 weeks *before* today |
+| `samples.accuweather.forecast_daily_calendar_imperial` | 2024-07-12 to 2024-07-26 | Rolling window, ~2 weeks *after* today |
+
+The review dates and weather dates **never overlap** — the weather tables
+slide forward with "today" while the reviews are frozen in the past. Because
+of this, the gold layer correlates review volume with each city's **current
+weather snapshot**, not the weather on the actual review date. Flag this
+explicitly when walking through the dashboard: the insight is "reviews vs.
+typical/current conditions in that city," not "reviews vs. the weather that
+day."
 
 ---
 
