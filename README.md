@@ -75,9 +75,9 @@ A guided walkthrough of the Databricks platform, intended as a live demo script 
 An end-to-end data + AI pipeline demonstrating how to go from raw catalog data to LLM-driven insights in six steps.
 
 ### Cell 1 — Configuration
-Sets the target catalog:
+Sets the target catalog (your own workspace catalog — **not** the read-only `samples` catalog the source data lives in, since you can't write back into `samples`):
 ```python
-TARGET_CATALOG = "samples.bakehouse"
+TARGET_CATALOG = "workspace.default"
 ```
 
 ### Cell 2 — Data join
@@ -86,7 +86,7 @@ Reads `samples.bakehouse.sales_franchises` and `samples.bakehouse.media_customer
 ### Cell 3 — Persist to Delta Lake
 Writes the joined DataFrame to a Delta table:
 ```
-samples.bakehouse.franchises_with_reviews
+workspace.default.franchises_with_reviews
 ```
 Uses `.format("delta").mode("overwrite")`.
 
