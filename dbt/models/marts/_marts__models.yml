@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: fct_weather_sales_correlation
-    description: "Gold — franchise review volume joined to city weather, same month (grain: franchise_id, review_month)."
+    description: "Gold — franchise review volume joined to its city's current weather snapshot (grain: franchise_id, review_month)."
     columns:
       - name: franchise_id
         data_tests:

@@ -6,6 +6,21 @@ Hands-on training material for data engineering and GenAI workflows on Databrick
 
 ---
 
+## Problem Statement — dbt + Databricks Weather & Sales Dashboard
+
+**Business question:** *Does the weather in a franchise's city help explain how many customer reviews it receives, and can we summarize that relationship in plain English for a non-technical audience?*
+
+The `dbt/` project and `dashboard/weather_sales_dashboard.lvdash.json` dashboard exist to answer this by:
+
+1. Reusing pre-loaded `samples.accuweather` (weather) and `samples.bakehouse` (franchise sales/reviews) sample data — no new ingestion required.
+2. Building a governed bronze → silver → gold dbt pipeline that joins review volume per franchise to the current weather snapshot in its city.
+3. Using `ai_query()` to turn each franchise's weather + review numbers into a one-sentence, human-readable insight.
+4. Surfacing all of it in a dashboard anyone can open and query visually — without writing SQL — to answer questions like *"Which franchises get the most reviews?"*, *"Is there a pattern between temperature/humidity and review volume?"*, and *"What's driving customer sentiment this month?"*
+
+See [`ClassScript.md`](./ClassScript.md) for the full step-by-step build and the pillars/values each step demonstrates.
+
+---
+
 ## Prerequisites
 
 - Access to a Databricks workspace with Unity Catalog enabled
