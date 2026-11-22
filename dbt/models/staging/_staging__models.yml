@@ -5,26 +5,64 @@ models:
     description: Bronze — one row per city/day weather forecast.
     columns:
       - name: city_name
+        description: City name as reported by the AccuWeather source, untrimmed/mixed case.
         data_tests:
           - not_null
+      - name: country_code
+        description: ISO country code for the city.
       - name: forecast_date
+        description: Calendar date the weather observation/forecast applies to.
         data_tests:
           - not_null
+      - name: temperature_avg
+        description: Average temperature for the day, in degrees Fahrenheit (source unit).
+      - name: temperature_max
+        description: Maximum temperature for the day, in degrees Fahrenheit.
+      - name: temperature_min
+        description: Minimum temperature for the day, in degrees Fahrenheit.
+      - name: temperature_avg_c
+        description: Average temperature converted to Celsius via the fahrenheit_to_celsius() macro.
+      - name: humidity_relative_avg
+        description: Average relative humidity for the day, as a percentage.
+      - name: precipitation_probability
+        description: Probability of precipitation for the day, as a percentage.
+      - name: has_precipitation
+        description: Boolean flag indicating whether any precipitation was recorded/forecast.
+      - name: wind_speed_avg
+        description: Average wind speed for the day, in miles per hour.
 
   - name: stg_bakehouse__sales_franchises
     description: Bronze — one row per bakery franchise location.
     columns:
       - name: franchise_id
+        description: Unique identifier of the franchise location (primary key).
         data_tests:
           - not_null
           - unique
+      - name: franchise_name
+        description: Human-readable display name of the franchise location.
+      - name: city
+        description: City where the franchise is located, as recorded in the source (untrimmed/mixed case).
+      - name: district
+        description: District/region the franchise belongs to.
+      - name: country
+        description: Country where the franchise is located.
+      - name: latitude
+        description: Franchise location latitude, in decimal degrees.
+      - name: longitude
+        description: Franchise location longitude, in decimal degrees.
 
   - name: stg_bakehouse__media_customer_reviews
     description: Bronze — one row per customer review, linked to a franchise.
     columns:
       - name: franchise_id
+        description: Foreign key to stg_bakehouse__sales_franchises.franchise_id.
         data_tests:
           - not_null
           - relationships:
               to: ref('stg_bakehouse__sales_franchises')
               field: franchise_id
+      - name: review
+        description: Free-text customer review content.
+      - name: review_date
+        description: Calendar date the review was submitted.

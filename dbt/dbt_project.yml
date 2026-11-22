@@ -17,6 +17,9 @@ clean-targets:
 
 models:
   uic_master_ml:
+    +persist_docs:
+      relation: true
+      columns: true
     example:
       +materialized: view
     staging:

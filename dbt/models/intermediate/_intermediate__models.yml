@@ -5,33 +5,84 @@ models:
     description: "Silver — weather snapshot aggregate per city (grain: city_key)."
     columns:
       - name: city_key
+        description: Lowercased/trimmed city name — join key for weather-by-city lookups.
         data_tests:
           - not_null
           - unique
+      - name: observed_from
+        description: Earliest forecast_date included in this city's rolling weather window.
+      - name: observed_to
+        description: Latest forecast_date included in this city's rolling weather window.
+      - name: avg_temperature_f
+        description: Average temperature across the observed window, in Fahrenheit.
+      - name: avg_temperature_c
+        description: Average temperature across the observed window, in Celsius.
+      - name: avg_humidity_pct
+        description: Average relative humidity across the observed window, as a percentage.
+      - name: avg_precipitation_probability
+        description: Average precipitation probability across the observed window, as a percentage.
+      - name: days_observed
+        description: Count of daily weather rows aggregated into this city snapshot.
 
   - name: int_franchise_review_summary
     description: "Silver — monthly customer review rollup per franchise (grain: franchise_id, review_month)."
     columns:
       - name: franchise_id
+        description: Foreign key to stg_bakehouse__sales_franchises.franchise_id.
         data_tests:
           - not_null
+      - name: franchise_name
+        description: Human-readable display name of the franchise location.
+      - name: city_key
+        description: Lowercased/trimmed city name — join key for weather-by-city lookups.
+      - name: review_month
+        description: Calendar month (first-of-month date) the reviews were aggregated into.
       - name: review_count
+        description: Number of customer reviews received by the franchise in the month.
         data_tests:
           - not_null
+      - name: reviews
+        description: Array of the raw review text strings collected for the month (COLLECT_LIST()).
 
   - name: int_daily_weather_by_city_day
     description: "Silver — daily weather per city with a sequential day_index for timeline alignment (grain: city_key, forecast_date)."
     columns:
       - name: city_key
+        description: Lowercased/trimmed city name — join key for weather-by-city lookups.
         data_tests:
           - not_null
+      - name: forecast_date
+        description: Calendar date of this daily weather observation.
+      - name: temperature_f
+        description: Average temperature for the day, in Fahrenheit.
+      - name: temperature_c
+        description: Average temperature for the day, in Celsius.
+      - name: humidity_pct
+        description: Average relative humidity for the day, as a percentage.
+      - name: precipitation_probability
+        description: Probability of precipitation for the day, as a percentage.
+      - name: day_index
+        description: Sequential day number per city (1, 2, 3...), ordered by forecast_date — used to align the weather timeline with the review timeline since the two sources don't share calendar dates.
 
   - name: int_daily_review_counts
     description: "Silver — daily review count + avg sentiment score per franchise with a sequential day_index for timeline alignment (grain: franchise_id, review_date)."
     columns:
       - name: franchise_id
+        description: Foreign key to stg_bakehouse__sales_franchises.franchise_id.
         data_tests:
           - not_null
+      - name: franchise_name
+        description: Human-readable display name of the franchise location.
+      - name: city_key
+        description: Lowercased/trimmed city name — join key for weather-by-city lookups.
+      - name: review_date
+        description: Calendar date the reviews were submitted.
+      - name: review_count
+        description: Number of customer reviews received by the franchise on this date.
+      - name: avg_sentiment_score
+        description: Average per-review sentiment score for the date (-1 negative, 0 neutral, 1 positive).
+      - name: day_index
+        description: Sequential day number per franchise (1, 2, 3...), ordered by review_date — used to align the review timeline with the weather timeline since the two sources don't share calendar dates.
 
   - name: int_review_sentiment_scores
     description: >
@@ -39,8 +90,16 @@ models:
       numeric score (-1 negative, 0 neutral, 1 positive).
     columns:
       - name: franchise_id
+        description: Foreign key to stg_bakehouse__sales_franchises.franchise_id.
         data_tests:
           - not_null
+      - name: review_date
+        description: Calendar date the review was submitted.
+      - name: review
+        description: Free-text customer review content, passed to ai_query() for classification.
+      - name: sentiment_label
+        description: Raw lowercased sentiment label returned by ai_query() ("positive", "neutral", or "negative").
       - name: sentiment_score
+        description: Numeric sentiment score derived from sentiment_label (-1 negative, 0 neutral, 1 positive).
         data_tests:
           - not_null

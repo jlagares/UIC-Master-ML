@@ -397,7 +397,7 @@
                     "order": 0,
                     "title": "Franchise",
                     "allowSearch": false,
-                    "alignContent": "left",
+                    "alignContent": "center",
                     "allowHTML": false,
                     "highlightLinks": false,
                     "useMonospaceFont": false,
@@ -421,7 +421,7 @@
                     "order": 1,
                     "title": "City",
                     "allowSearch": false,
-                    "alignContent": "left",
+                    "alignContent": "center",
                     "allowHTML": false,
                     "highlightLinks": false,
                     "useMonospaceFont": false,
@@ -446,7 +446,7 @@
                     "order": 2,
                     "title": "Matched Days",
                     "allowSearch": false,
-                    "alignContent": "right",
+                    "alignContent": "center",
                     "allowHTML": false,
                     "highlightLinks": false,
                     "useMonospaceFont": false,
@@ -471,11 +471,24 @@
                     "order": 3,
                     "title": "Sentiment \u2194 Temp Corr.",
                     "allowSearch": false,
-                    "alignContent": "right",
+                    "alignContent": "center",
                     "allowHTML": false,
                     "highlightLinks": false,
                     "useMonospaceFont": false,
                     "preserveWhitespace": false,
+                    "cellFormat": {
+                      "default": { "foregroundColor": null },
+                      "rules": [
+                        {
+                          "if": { "column": "sentiment_temp_correlation", "fn": ">=", "literal": "0.5" },
+                          "value": { "foregroundColor": "#1E8E3E" }
+                        },
+                        {
+                          "if": { "column": "sentiment_temp_correlation", "fn": "<=", "literal": "-0.5" },
+                          "value": { "foregroundColor": "#1E8E3E" }
+                        }
+                      ]
+                    },
                     "displayName": "sentiment_temp_correlation"
                   },
                   {
@@ -496,11 +509,24 @@
                     "order": 4,
                     "title": "Sentiment \u2194 Humidity Corr.",
                     "allowSearch": false,
-                    "alignContent": "right",
+                    "alignContent": "center",
                     "allowHTML": false,
                     "highlightLinks": false,
                     "useMonospaceFont": false,
                     "preserveWhitespace": false,
+                    "cellFormat": {
+                      "default": { "foregroundColor": null },
+                      "rules": [
+                        {
+                          "if": { "column": "sentiment_humidity_correlation", "fn": ">=", "literal": "0.5" },
+                          "value": { "foregroundColor": "#1E8E3E" }
+                        },
+                        {
+                          "if": { "column": "sentiment_humidity_correlation", "fn": "<=", "literal": "-0.5" },
+                          "value": { "foregroundColor": "#1E8E3E" }
+                        }
+                      ]
+                    },
                     "displayName": "sentiment_humidity_correlation"
                   },
                   {
@@ -521,7 +547,7 @@
                     "order": 5,
                     "title": "Avg Sentiment",
                     "allowSearch": false,
-                    "alignContent": "right",
+                    "alignContent": "center",
                     "allowHTML": false,
                     "highlightLinks": false,
                     "useMonospaceFont": false,
