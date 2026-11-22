@@ -144,6 +144,14 @@ is standard and extends cleanly to new sources.
 - `.\runFull.ps1 test` (or `build`, which runs + tests) is the repeatable,
   versioned CI unit — **Agility** (fast feedback) + **Interoperability**
   (same container runs locally today, in CI tomorrow).
+- **Beyond dbt tests — a platform-level alert:** dbt tests catch *shape*
+  problems (nulls, duplicates, broken foreign keys) but not a *silently
+  empty* table that still passes every test (0 rows is still "all rows are
+  not-null"). `alerts/create_alert.ps1` creates a Databricks SQL Alert that
+  fires when `fct_weather_sales_ai_summary` has zero rows — the exact
+  failure this project hit when the weather↔city join stopped matching. Run
+  it once (`.\alerts\create_alert.ps1`) and add a notification destination
+  in the Databricks UI.
 
 ### Step 4 — Software Engineering: modularity
 

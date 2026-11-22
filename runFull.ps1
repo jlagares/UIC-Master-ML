@@ -68,3 +68,19 @@ Write-Host "    Gold tables: workspace.gold.fct_weather_sales_correlation, works
 Write-Host "    To visualize: in Databricks, go to Dashboards > Create > Import dashboard from file,"
 Write-Host "    and select: $DashboardFile"
 Write-Host "    See ClassScript.md for the full walkthrough."
+
+# Make sure the "gold table empty" safety-net alert exists (idempotent).
+$CreateAlertScript = Join-Path $RepoRoot "alerts\create_alert.ps1"
+if (Test-Path $CreateAlertScript) {
+    Write-Host ""
+    Write-Host "==> Ensuring the gold-table-empty Databricks alert exists..." -ForegroundColor Cyan
+    & $CreateAlertScript
+}
+
+# Make sure the native Databricks Job (dbt_task) mirrors this pipeline (idempotent).
+$CreateJobScript = Join-Path $RepoRoot "jobs\create_job.ps1"
+if (Test-Path $CreateJobScript) {
+    Write-Host ""
+    Write-Host "==> Ensuring the Databricks Job (dbt_task) is up to date..." -ForegroundColor Cyan
+    & $CreateJobScript
+}

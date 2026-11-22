@@ -37,14 +37,33 @@ See [`ClassScript.md`](./ClassScript.md) for the full step-by-step build and the
 sample.py                         # Standalone Python script — calls Databricks LLM endpoint via REST API
 Dockerfile                        # dbt-databricks image (latest stable dbt + Databricks adapter)
 install.ps1                       # Installs dbt-databricks + Databricks CLI tooling on Windows
-run.ps1                           # Builds/runs the dbt-databricks Docker image (debug/run/test/docs)
+runBasic.ps1                      # Basic dbt<->Databricks connectivity (debug/run/test/docs on localhost:8080)
+runFull.ps1                       # Full bronze → silver → gold E2E build/run/test
+ClassScript.md                    # Full class walkthrough: business problem + 6-step scenario
 .env.example                      # Template for Databricks connection variables (PAT-based auth)
 .env                              # Your actual connection values — gitignored, never commit
 dbt/
-  dbt_project.yml                 # dbt project config
+  dbt_project.yml                 # dbt project config (schema mapping: staging/intermediate/marts -> bronze/silver/gold)
   profiles.yml                    # Databricks connection profile (reads vars from .env)
-  models/example/
-    my_first_model.sql            # Minimal smoke-test model (`select 1 ...`)
+  macros/
+    get_custom_schema.sql         # Schema-naming override macro
+    fahrenheit_to_celsius.sql     # Reusable unit-conversion macro
+  models/
+    example/my_first_model.sql    # Minimal smoke-test model (`select 1 ...`), used by runBasic.ps1
+    staging/                      # Bronze: cleaned pass-through of samples.bakehouse / samples.accuweather
+    intermediate/                 # Silver: review/weather/sentiment rollups
+    marts/                        # Gold: weather↔sales correlation + ai_query() narrative
+dashboard/
+  weather_sales_dashboard.lvdash.json   # Lakeview dashboard, importable as-is in Databricks
+  lineage_annotated.png                 # Annotated bronze/silver/gold lineage diagram
+alerts/
+  gold_table_empty_check.sql      # Alert condition query (row_count == 0 on the gold AI-summary table)
+  create_alert.ps1                # Creates the Databricks SQL Alert via REST API (idempotent)
+  README.md                       # How the alert works and how to add notification destinations
+jobs/
+  dbt_e2e_job.json                # Templated export of the Databricks Job (dbt deps/seed/run)
+  create_job.ps1                  # Creates/updates the Databricks Job via REST API (idempotent)
+  README.md                       # How the job works and its placeholders
 Instructions/
   Step By Step usage.ipynb        # Platform onboarding: Databricks UI, GitHub, Jobs, SQL, Genie
 Notebooks/

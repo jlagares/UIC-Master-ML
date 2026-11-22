@@ -1,0 +1,47 @@
+{
+  "name": "DBT Job",
+  "email_notifications": {
+    "no_alert_for_skipped_runs": false
+  },
+  "webhook_notifications": {},
+  "timeout_seconds": 0,
+  "max_concurrent_runs": 1,
+  "tasks": [
+    {
+      "task_key": "DBT_E2E",
+      "run_if": "ALL_SUCCESS",
+      "dbt_task": {
+        "project_directory": "__PROJECT_DIRECTORY__",
+        "commands": [
+          "dbt deps",
+          "dbt seed",
+          "dbt run"
+        ],
+        "warehouse_id": "__WAREHOUSE_ID__",
+        "catalog": "__CATALOG__",
+        "source": "WORKSPACE"
+      },
+      "timeout_seconds": 0,
+      "email_notifications": {},
+      "webhook_notifications": {},
+      "environment_key": "dbt-default",
+      "disabled": false
+    }
+  ],
+  "format": "MULTI_TASK",
+  "queue": {
+    "enabled": true
+  },
+  "environments": [
+    {
+      "environment_key": "dbt-default",
+      "spec": {
+        "dependencies": [
+          "dbt-databricks>=1.0.0,<2.0.0"
+        ],
+        "environment_version": "6"
+      }
+    }
+  ],
+  "performance_target": "PERFORMANCE_OPTIMIZED"
+}
